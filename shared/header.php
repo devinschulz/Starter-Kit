@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
 	<link rel="stylesheet" href="stylesheets/css/typography.css">
 	<!-- Complile .less to css before -->
-	<link rel="stylesheet" href="stylesheets/css/style.css">
+	<link rel="stylesheet" href="stylesheets/css/styles.css">
 </head>
 <body>
 
