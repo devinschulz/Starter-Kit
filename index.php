@@ -1,8 +1,10 @@
 <?php
-$title = '';
-$desc = '';
 
-	include 'shared/header.php';
+	$title = '';
+	$desc = '';
+	$section = '';
+
+	include('inc/header.php');
 
 ?>
 
@@ -12,6 +14,6 @@ $desc = '';
 
 <?php
 
-	include 'shared/footer.php';
+	include('inc/footer.php');
 
 ?>
