@@ -1,0 +1,97 @@
+ /*------------------------------------*\
+	$TYPOGRAPHY
+ \*------------------------------------*/
+
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+ 	font-family: $heading-font-family;
+ 	font-weight: $headings-font-weight;
+ 	line-height: $heading-line-height;
+ 	margin-top: 0;
+ 	text-rendering: optimizeLegibility;
+ 	color: $primary;
+ }
+
+ .giga {
+ 	font-size: $giga-size;
+ 	margin-bottom: 0.33em;
+ }
+
+ .mega {
+ 	font-size: $mega-size;
+ 	margin-bottom: 0.4125em;
+ }
+
+ .kilo {
+ 	font-size: $kilo-size;
+ 	margin-bottom: 0.4125em;
+ }
+
+ h1,
+ .alpha {
+ 	font-size: $h1-size;
+ 	margin-bottom: 0.495em;
+ }
+
+ h2,
+ .beta {
+ 	font-size: $h2-size;
+ 	margin-bottom: 0.61875rem;
+ }
+
+ h3,
+ .gamma {
+ 	font-size: $h3-size;
+ 	margin-bottom: 0.825em;
+ }
+
+ h4,
+ .delta {
+ 	font-size: $h4-size;
+ 	margin-bottom: 1.2375em;
+ }
+
+ h5,
+ .epsilon {
+ 	font-size: $h5-size;
+ 	margin-bottom: 1.5em;
+ }
+
+ h6,
+ .zeta {
+ 	font-size: $h6-size;
+ 	margin-bottom: 1.65em;
+ }
+
+ p {
+ 	margin: auto auto 1.5em;
+ }
+
+ p + p {
+ 	text-indent: 1.5em;
+ 	margin-top: -1.5em;
+ }
+
+ abbr,
+ acronym,
+ blockquote,
+ code,
+ dir,
+ kbd,
+ listing,
+ plaintext,
+ q,
+ samp,
+ tt,
+ var,
+ xmp {
+ 	-webkit-hyphens: none;
+ 	-moz-hyphens: none;
+ 	-ms-hyphens: none;
+ 	-o-hyphens: none;
+ 	hyphens: none;
+ }
