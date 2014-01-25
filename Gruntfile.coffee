@@ -156,9 +156,18 @@ module.exports = (grunt) ->
 
     # Clear files and folders
     # https://github.com/gruntjs/grunt-contrib-clean
-    clean: [
-      '<%= dist.root %>'
-    ]
+    clean:
+      root: [
+        '<%= dist.root %>'
+      ]
+      scripts: [
+        '<%= dist.js %>/scripts.js'
+      ]
+
+    rename:
+      scripts:
+        src: '<%= dist.js %>/scripts.min.js'
+        dest: '<%= dist.js %>/scripts.js'
 
     # Run tasks whenever watched files change.
     # https://github.com/gruntjs/grunt-contrib-watch
@@ -205,6 +214,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-htmlmin')
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-rename')
 
   # Run Notify
   grunt.task.run('notify_hooks')
@@ -219,7 +229,7 @@ module.exports = (grunt) ->
 
   # Run with 'grunt production'
   grunt.registerTask('production', [
-    'clean'
+    'clean:root'
     'coffee'
     'coffeelint'
     'sass:dist'
@@ -230,4 +240,6 @@ module.exports = (grunt) ->
     'svgmin'
     'imagemin'
     'htmlmin'
+    'clean:scripts'
+    'rename:scripts'
   ])
