@@ -1,0 +1,18 @@
+{
+  "name": "starter-kit",
+  "version": "0.1.0",
+  "homepage": "https://github.com/iDevSchulz/Starter-Kit",
+  "authors": [
+    "Devin Schulz"
+  ],
+  "directory": "packages",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "packages",
+    "test",
+    "tests"
+  ],
+  "private": true
+}
