@@ -9,7 +9,8 @@ module.exports = (grunt) ->
     banner: '/**\n' +
       '<%= pkg.title %> - <%= pkg.version %>\n' +
       '<%= pkg.homepage %>\n' +
-      'Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+      'Copyright (c) <%= grunt.template.today("yyyy") %>' +
+      '<%= pkg.author.name %>\n' +
       'License: <%= pkg.license %>\n' +
       '*/\n',
 
@@ -41,7 +42,7 @@ module.exports = (grunt) ->
     # https://github.com/gruntjs/grunt-contrib-jshint
     jshint:
       all: [
-        '<%= dir.js %>/**/*.js'
+        '<%= dir.js %>/*.js'
       ]
 
     # Uglify
@@ -61,11 +62,12 @@ module.exports = (grunt) ->
       compress:
         options:
           optimizationLevel: 3
-        files:
+        files: [
           expand: true
           cwd: '<%= dir.img %>/'
           src:  '{,*/}*.{png,jpg,jpeg}'
           dest: '<%= dist.img %>'
+        ]
 
     # Minify SVG
     # https://github.com/sindresorhus/grunt-svgmin
@@ -76,11 +78,12 @@ module.exports = (grunt) ->
           removeUselessStrokeAndFill: false
         ]
       dist:
-        files:
+        files: [
           expand: true
           cwd: '<%= dir.img %>/'
           src: ['**/*.svg']
-          dest: '<%= dir.img %>/'
+          dest: '<%= dist.img %>/'
+        ]
 
     # Compile Sass SCSS to CSS
     # https://github.com/sindresorhus/grunt-sass
@@ -89,13 +92,13 @@ module.exports = (grunt) ->
         options:
           style: 'expanded'
         files: [
-          '<%= dir.css %>/styles.css': '<%= dir.sass %>/styles.scss'
+          '<%= dir.css %>/styles.css' : '<%= dir.sass %>/styles.scss'
         ]
       dist:
         options:
           style: 'compressed'
         files: [
-          '<%= dist.css %>/styles.css': '<%= dir.sass %>/styles.scss'
+          '<%= dist.css %>/styles.css' : '<%= dir.sass %>/styles.scss'
         ]
 
     # Compile CoffeeScript files to JavaScript.
@@ -103,11 +106,16 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files: [
-          '<%= dir.js %>/scripts.js': '<%= dir.coffee %>/scripts.coffee'
+          '<%= dir.js %>/scripts.js' : '<%= dir.coffee %>/scripts.coffee'
         ]
 
+    # CoffeeLint
+    # https://github.com/vojtajina/grunt-coffeelint
     coffeelint:
-      app: '<%= dir.coffee %>/*.coffee'
+      app: [
+        '<%= dir.coffee %>/*.coffee'
+        'gruntfile.coffee'
+      ]
       options:
         'no_trailing_whitespace':
           'level': 'error'
@@ -125,7 +133,15 @@ module.exports = (grunt) ->
     copy:
       main:
         files: [
-
+          {
+            expand: true
+            src: '.htaccess'
+            dest: '<%= dist.root %>'
+          },{
+            expand: true
+            src: 'robots.txt'
+            dest: '<%= dist.root %>'
+          }
         ]
 
     # Minify HTML
@@ -136,7 +152,13 @@ module.exports = (grunt) ->
           removeComments: true
           collapseWhitespace: true
         files:
-          'index.html' : '<%= dist.root %>'
+          'index.html' : '<%= dist.root %>/index.html'
+
+    # Clear files and folders
+    # https://github.com/gruntjs/grunt-contrib-clean
+    clean: [
+      '<%= dist.root %>'
+    ]
 
     # Run tasks whenever watched files change.
     # https://github.com/gruntjs/grunt-contrib-watch
@@ -182,9 +204,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-htmlmin')
   grunt.loadNpmTasks('grunt-coffeelint')
+  grunt.loadNpmTasks('grunt-contrib-clean')
 
   # Run Notify
-  grunt.task.run('notify_hooks');
+  grunt.task.run('notify_hooks')
 
   # Run with 'grunt'
   grunt.registerTask('default', [
@@ -196,13 +219,15 @@ module.exports = (grunt) ->
 
   # Run with 'grunt production'
   grunt.registerTask('production', [
+    'clean'
     'coffee'
     'coffeelint'
     'sass:dist'
     'concat'
     'uglify'
     'jshint'
-    'imagemin'
+    'copy'
     'svgmin'
+    'imagemin'
     'htmlmin'
   ])
