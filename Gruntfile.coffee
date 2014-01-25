@@ -37,12 +37,18 @@ module.exports = (grunt) ->
           '<%= dir.js %>/*.js'
         ]
         dest: '<%= dist.js %>/scripts.js'
+      vendor:
+        src: [
+          '<%= dir.js %>/vendor/*.js'
+        ]
+        dest: '<%= dir.js %>/plugins.js'
 
     # Validate files with JSHint.
     # https://github.com/gruntjs/grunt-contrib-jshint
     jshint:
       all: [
         '<%= dir.js %>/*.js'
+        '!<%= dir.js %>/plugins.js'
       ]
 
     # Uglify
@@ -51,6 +57,7 @@ module.exports = (grunt) ->
     uglify:
       build:
         src: [
+          '<%= dist.js %>/plugins.js'
           '<%= dist.js %>/scripts.js'
         ]
         dest: '<%= dist.js %>/scripts.min.js'
@@ -181,6 +188,7 @@ module.exports = (grunt) ->
           '<%= uglify.build.src %>'
         ]
         tasks: [
+          'concat:vendor'
           'coffee'
           'coffeelint'
           'jshint'
@@ -224,7 +232,9 @@ module.exports = (grunt) ->
     'sass:dev'
     'coffee'
     'coffeelint'
+    'concat:vendor'
     'jshint'
+
   ])
 
   # Run with 'grunt production'
