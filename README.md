@@ -18,5 +18,5 @@ Grunt
 During development Grunt will watch your files by running <code>grunt watch</code>. 
 
 ## Deployment
-For deployment run <code>grunt production</code>. Grunt will magically package, concatinate, combine and do some super awesome things for you; then store the package in a <code>dist</code> directory. From there you can upload  the <code>dist</code> contents to your webserver and happy time for all!
+For deployment run <code>grunt production</code>. Grunt will magically package, concatenate, combine and do some super awesome things for you; then store the package in a <code>dist</code> directory. From there you can upload  the <code>dist</code> contents to your webserver and happy time for all!
 
