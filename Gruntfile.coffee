@@ -234,7 +234,6 @@ module.exports = (grunt) ->
     'coffeelint'
     'concat:vendor'
     'jshint'
-
   ])
 
   # Run with 'grunt production'
