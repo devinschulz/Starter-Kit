@@ -150,6 +150,30 @@ module.exports = (grunt) ->
             dest: '<%= dist.root %>'
           }
         ]
+    # Autoprefixer
+    # Parse CSS and add vendor-prefixed CSS properties
+    # using the Can I Use database. Based on Autoprefixer
+    autoprefixer:
+      dev:
+        single_file:
+          options:
+            browsers: [
+              'last 2 version'
+              'ie 8',
+              'ie 9'
+            ]
+          src: '<%= dir.css %>/styles.css'
+          dest: '<%= dir.css %>/styles.css'
+      dist:
+        single_file:
+          options:
+            browsers: [
+              'last 2 version'
+              'ie 8',
+              'ie 9'
+            ]
+          src: '<%= dist.css %>/styles.css'
+          dest: '<%= dist.css %>/styles.css'
 
     # Minify HTML
     # https://github.com/gruntjs/grunt-contrib-htmlmin
@@ -199,7 +223,10 @@ module.exports = (grunt) ->
         files: [
           '<%= dir.sass %>/*.scss'
         ]
-        tasks: 'sass:dev'
+        tasks: [
+          'sass:dev'
+          'autoprefixer:dev'
+        ]
         options:
           spawn: false
       scaffold:
@@ -223,6 +250,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-rename')
+  grunt.loadNpmTasks('grunt-rename')
+  grunt.loadNpmTasks('grunt-autoprefixer')
 
   # Run Notify
   grunt.task.run('notify_hooks')
@@ -242,6 +271,7 @@ module.exports = (grunt) ->
     'coffee'
     'coffeelint'
     'sass:dist'
+    'autoprefixer:dev'
     'concat'
     'uglify'
     'jshint'
