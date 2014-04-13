@@ -5,22 +5,14 @@ module.exports = (grunt) ->
     # Read the main package
     pkg: grunt.file.readJSON('package.json')
 
-    # Set Banner
-    banner: '/**\n' +
-      '<%= pkg.title %> - <%= pkg.version %>\n' +
-      '<%= pkg.homepage %>\n' +
-      'Copyright (c) <%= grunt.template.today("yyyy") %>' +
-      '<%= pkg.author.name %>\n' +
-      'License: <%= pkg.license %>\n' +
-      '*/\n',
-
     # Set the directory defaults
     dir:
-      js: 'js'
-      coffee: 'js/coffee'
-      css: 'css'
-      sass: 'css/scss'
-      img: 'img'
+      app: 'app'
+      js: 'app/js'
+      coffee: 'app/js/coffee'
+      css: 'app/css'
+      sass: 'app/css/scss'
+      img: 'app/img'
 
     # Distribution
     dist:
@@ -39,7 +31,7 @@ module.exports = (grunt) ->
         dest: '<%= dist.js %>/scripts.js'
       vendor:
         src: [
-          '<%= dir.js %>/vendor/*.js'
+          '<%= dir.js %>/vendors/*.js'
         ]
         dest: '<%= dir.js %>/plugins.js'
 
@@ -93,19 +85,28 @@ module.exports = (grunt) ->
         ]
 
     # Compile Sass SCSS to CSS
-    # https://github.com/sindresorhus/grunt-sass
+    # https://github.com/gruntjs/grunt-contrib-sass
     sass:
       dev:
         options:
           style: 'expanded'
+          require: [
+            'bourbon'
+            'neat'
+          ]
+          sourcemap: true
         files: [
-          '<%= dir.css %>/styles.css' : '<%= dir.sass %>/styles.scss'
+          '<%= dir.css %>/styles.css' : '<%= dir.sass %>/main.scss'
         ]
       dist:
         options:
           style: 'compressed'
+          require: [
+            'bourbon'
+            'neat'
+          ]
         files: [
-          '<%= dist.css %>/styles.css' : '<%= dir.sass %>/styles.scss'
+          '<%= dist.css %>/styles.css' : '<%= dir.sass %>/main.scss'
         ]
 
     # Compile CoffeeScript files to JavaScript.
@@ -150,30 +151,16 @@ module.exports = (grunt) ->
             dest: '<%= dist.root %>'
           }
         ]
+
     # Autoprefixer
     # Parse CSS and add vendor-prefixed CSS properties
     # using the Can I Use database. Based on Autoprefixer
     autoprefixer:
-      dev:
-        single_file:
-          options:
-            browsers: [
-              'last 2 version'
-              'ie 8',
-              'ie 9'
-            ]
-          src: '<%= dir.css %>/styles.css'
-          dest: '<%= dir.css %>/styles.css'
-      dist:
-        single_file:
-          options:
-            browsers: [
-              'last 2 version'
-              'ie 8',
-              'ie 9'
-            ]
-          src: '<%= dist.css %>/styles.css'
-          dest: '<%= dist.css %>/styles.css'
+      single_file:
+        options:
+          browsers: ['last 15 version', 'ie 8', 'ie 9']
+        src: '<%= dir.css %>/styles.css'
+        dest: '<%= dir.css %>/styles.css'
 
     # Minify HTML
     # https://github.com/gruntjs/grunt-contrib-htmlmin
@@ -183,7 +170,7 @@ module.exports = (grunt) ->
           removeComments: true
           collapseWhitespace: true
         files:
-          '<%= dist.root %>/index.html' : 'index.html'
+          '<%= dist.root %>/index.html' : '<%= dir.app %>/index.html'
 
     # Clear files and folders
     # https://github.com/gruntjs/grunt-contrib-clean
@@ -194,21 +181,59 @@ module.exports = (grunt) ->
       scripts: [
         '<%= dist.js %>/scripts.js'
       ]
+      images: [
+        '<%= dir.img %>/sprt.png'
+      ]
 
     rename:
       scripts:
         src: '<%= dist.js %>/scripts.min.js'
         dest: '<%= dist.js %>/scripts.js'
 
+    connect:
+      options:
+        port: 9000
+        livereload: 35729
+        hostname: 'localhost'
+      livereload:
+        options:
+          open: true
+          base: './<%= dir.app %>'
+
+    # Run grunt tasks concurrently
+    # https://github.com/sindresorhus/grunt-concurrent
+    concurrent:
+      server:
+        'sass'
+
+    # Grunt task for converting a set of images into a spritesheet and corresponding CSS variables
+    # https://github.com/Ensighten/grunt-spritesmith
+    sprite:
+      all:
+        src: '<%= dir.img %>/*.png'
+        destImg: '<%= dir.img %>/sprt.png'
+        destCSS: '<%= dir.sass %>/modules/_sprite.scss'
+        cssFormat: 'scss'
+
     # Run tasks whenever watched files change.
     # https://github.com/gruntjs/grunt-contrib-watch
     watch:
       options:
         livereload: true
+
+      images:
+        files: [
+          '<%= dir.img %>/*.png}'
+        ]
+        tasks: [
+          'clean:image',
+          'sprite'
+        ]
+
       scripts:
         files: [
-          '<%= dir.js %>/*.js'
-          '<%= dir.coffee %>/*.coffee'
+          '<%= dir.js %>/**/*.js'
+          '<%= dir.coffee %>/**/*.coffee'
           '<%= uglify.build.src %>'
         ]
         tasks: [
@@ -219,16 +244,18 @@ module.exports = (grunt) ->
         ]
         options:
           spawn: false
-      css:
+
+      sass:
         files: [
-          '<%= dir.sass %>/*.scss'
+          '<%= dir.sass %>/**/*.scss'
         ]
         tasks: [
           'sass:dev'
-          'autoprefixer:dev'
+          'autoprefixer'
         ]
         options:
           spawn: false
+
       scaffold:
         files: [
           '**/*.{html,php}',
@@ -236,42 +263,27 @@ module.exports = (grunt) ->
         ]
 
   # Load Tasks
-  grunt.loadNpmTasks('grunt-contrib-concat')
-  grunt.loadNpmTasks('grunt-contrib-uglify')
-  grunt.loadNpmTasks('grunt-contrib-imagemin')
-  grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks('grunt-contrib-sass')
-  grunt.loadNpmTasks('grunt-contrib-coffee')
-  grunt.loadNpmTasks('grunt-notify')
-  grunt.loadNpmTasks('grunt-contrib-jshint')
-  grunt.loadNpmTasks('grunt-svgmin')
-  grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-contrib-htmlmin')
-  grunt.loadNpmTasks('grunt-coffeelint')
-  grunt.loadNpmTasks('grunt-contrib-clean')
-  grunt.loadNpmTasks('grunt-rename')
-  grunt.loadNpmTasks('grunt-rename')
-  grunt.loadNpmTasks('grunt-autoprefixer')
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
 
   # Run Notify
   grunt.task.run('notify_hooks')
 
   # Run with 'grunt'
-  grunt.registerTask('default', [
+  grunt.registerTask 'default', [
     'sass:dev'
     'coffee'
     'coffeelint'
     'concat:vendor'
     'jshint'
-  ])
+  ]
 
   # Run with 'grunt production'
-  grunt.registerTask('production', [
+  grunt.registerTask 'production', [
     'clean:root'
     'coffee'
     'coffeelint'
     'sass:dist'
-    'autoprefixer:dev'
+    'autoprefixer'
     'concat'
     'uglify'
     'jshint'
@@ -281,4 +293,14 @@ module.exports = (grunt) ->
     'htmlmin'
     'clean:scripts'
     'rename:scripts'
-  ])
+  ]
+
+  grunt.registerTask 'serve', (target) ->
+    if target == 'dist'
+      return grunt.task.run(['build', 'connect:dist:keepalive'])
+
+    grunt.task.run(
+      'autoprefixer'
+      'connect:livereload'
+      'watch'
+    )
