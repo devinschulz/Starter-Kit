@@ -17,7 +17,7 @@ $sizes: giga $giga-size, mega $mega-size, kilo $kilo-size, alpha $h1-size, beta 
 @each $size in $sizes {
   .#{nth($size, 1)} {
     @include font-size(nth($size, 2));
-    @include calcMargin(nth($size, 2));
+    @include calc-margin(nth($size, 2));
   }
 }
 
@@ -30,7 +30,7 @@ $headings: h1 alpha, h2 beta, h3 gamma, h4 delta, h5 epsilon, h6 zeta;
 }
 
 p {
-  margin: 0 0 ($base-line-height * .5);
+  margin: 0 0 rem(($base-line-height * .5));
 }
 
 a {

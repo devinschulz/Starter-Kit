@@ -5,7 +5,7 @@
 }
 
 // Calculate the margin-bottom of headings
-@mixin calcMargin($size) {
+@mixin calc-margin($size) {
   $remSize: (($base-font-size * $base-line-height) / $size);
   margin-bottom: round($remSize);
   margin-bottom: rem($remSize);
@@ -16,4 +16,9 @@
   opacity: $opacity;
   $opacity-ie: $opacity * 100;
   filter: alpha(opacity=$opacity-ie);
+}
+
+// Custom Grid
+@mixin grid-item-columns($columns) {
+  width: (100% / 12) * $columns;
 }
