@@ -1,0 +1,149 @@
+//=============================================
+// Breakpoints
+//=============================================
+
+$mobile-width:              em(320);
+$mobile-landscape-width:    em(480);
+$tablet-width:              em(768);
+$desktop-width:             em(1000);
+$super-width:               em(1120);
+
+$mobile:                    new-breakpoint($mobile-width, 4);
+$mobile-landscape:          new-breakpoint($mobile-landscape-width, 6);
+$tablet:                    new-breakpoint($tablet-width, 6);
+$desktop:                   new-breakpoint($desktop-width, 12);
+$super:                     new-breakpoint($super-width, 16);
+
+//=============================================
+// Neat
+//=============================================
+
+$grid-columns:              4;
+$max-width:                 $super-width;
+
+//=============================================
+// Colors
+//=============================================
+
+// Shades
+// -------------------------
+$black:                     #111;
+$gray:                      #aaa;
+$gray-lighter:              #ddd;
+$white:                     #fff;
+
+// Colors
+// -------------------------
+$primary-light:             #7FDBFF;
+$primary:                   #0074D9;
+$primary-dark:              #001F3F;
+
+$secondary-light:           #01FF70;
+$secondary:                 #2ECC40;
+$secondary-dark:            #3D9970;
+
+$error:                     #FF4136;
+$valid:                     #2ECC40;
+
+// Scaffolding
+// -------------------------
+$body-background:           $white;
+$base-text-color:           $black;
+
+// Links
+// -------------------------
+$base-link-color:           $primary;
+$hover-link-color:          lighten($base-link-color, 15%);
+$active-link-color:         darken($base-link-color, 10%);
+
+//=============================================
+// Typography
+//=============================================
+
+$base-font-family:  	      "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$heading-font-family:       $base-font-family;
+$mono-font-family:  	      Monaco, Menlo, Consolas, "Courier New", monospace;
+
+// Line Height
+// -------------------------
+$base-font-size:            16px;
+$base-line-height:          24px;
+$line-height-ratio:         1.5;
+$line-height:               $base-font-size/$base-line-height;
+$heading-line-height:       1;
+
+// Headings
+// -------------------------
+$giga-size:         	      $base-font-size * 3;
+$mega-size:         	      $base-font-size * 2.75;
+$kilo-size:         	      $base-font-size * 2.5;
+
+$h1-size:                   $base-font-size * 2.25; // 36px .alpha
+$h2-size:                   $base-font-size * 2;    // 32px .beta
+$h3-size:                   $base-font-size * 1.75; // 28px .gamma
+$h4-size:                   $base-font-size * 1.5;  // 24px .delta
+$h5-size:                   $base-font-size * 1.25; // 20px .epsilon
+$h6-size:                   $base-font-size; // .zeta
+
+$milli-size:        	      12;
+$micro-size:        	      10;
+
+$headings-font-family:      inherit;
+$headings-font-weight:      bold;
+$headings-color:            inherit;
+
+// Font Weights
+// -------------------------
+$font-weight-light: 	      300;
+$font-weight-normal:        400;
+$font-weight-semibold:      700;
+$font-weight-bold: 	        900;
+
+
+//=============================================
+// Component Sizing
+//=============================================
+
+$paddingMini:               0 em(6);
+$paddingSmall:              em(2) em(10);
+$paddingMedium:             em(5) em(15);
+$paddingLarge:              em(10) em(20);
+
+$small-border-radius:       em(3);
+$border-radius:             em(4);
+$large-border-radius:       em(6);
+
+//=============================================
+// Buttons
+//=============================================
+
+$primary-btn-bg:            $primary;
+$primary-btn-bg-hover:      lighten($primary, 10%);
+$primary-btn-bg-active:     darken($primary, 10%);
+
+//=============================================
+// Z-Index
+//=============================================
+
+$z-index-default:			        900;
+$z-index-dropdown:            1000;
+$z-index-popover:             1010;
+$z-index-tooltip:             1030;
+$z-index-fixedNavbar:         1030;
+$z-index-modalBackdrop:       1040;
+$z-index-modal:               1050;
+
+//=============================================
+// Inputs
+//=============================================
+
+$placeholder-text:           $gray;
+
+//=============================================
+// Border
+//=============================================
+$hr-border:                  $gray;
+
+
+
+

@@ -1,0 +1,14 @@
+html{
+	font: #{$font-weight-normal} #{($base-font-size/16px)*1em}/#{$line-height-ratio} $base-font-family;
+	overflow-y:scroll;
+	min-height:100%;
+}
+
+body {
+  color: $base-text-color;
+  font-smoothing: antialiased;
+}
+
+hr {
+  border-top: 1px solid $hr-border;
+}

@@ -1,0 +1,49 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary;
+  font-family: $heading-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $heading-line-height;
+  margin: 0;
+  text-rendering: optimizeLegibility;
+}
+
+$sizes: giga $giga-size, mega $mega-size, kilo $kilo-size, alpha $h1-size, beta $h2-size, gamma $h3-size, delta $h4-size, epsilon $h5-size, zeta $h6-size;
+
+@each $size in $sizes {
+  .#{nth($size, 1)} {
+    @include font-size(nth($size, 2));
+    @include calcMargin(nth($size, 2));
+  }
+}
+
+$headings: h1 alpha, h2 beta, h3 gamma, h4 delta, h5 epsilon, h6 zeta;
+
+@each $heading in $headings {
+  #{nth($heading, 1)} {
+    @extend .#{nth($heading, 2)};
+  }
+}
+
+p {
+  margin: 0 0 ($base-line-height * .5);
+}
+
+a {
+  color: $base-link-color;
+  text-decoration: none;
+  transition: color 0.1s linear;
+
+  &:hover {
+    color: $hover-link-color;
+  }
+
+  &:active, &:focus {
+    color: $hover-link-color;
+    outline: none;
+  }
+}

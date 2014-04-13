@@ -1,0 +1,19 @@
+// Convert Font Size to PX
+@mixin font-size($sizeValue: 1.6){
+  font-size: round($sizeValue);
+  font-size: rem($sizeValue);
+}
+
+// Calculate the margin-bottom of headings
+@mixin calcMargin($size) {
+  $remSize: (($base-font-size * $base-line-height) / $size);
+  margin-bottom: round($remSize);
+  margin-bottom: rem($remSize);
+}
+
+//IE8 Opacity Fallback
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie);
+}

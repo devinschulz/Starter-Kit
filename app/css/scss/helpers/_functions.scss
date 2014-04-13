@@ -1,0 +1,10 @@
+// Convert PX to EM
+@function em($pixels, $context: 16) {
+  @return ($pixels/$context) * 1em;
+}
+
+// Convert PX to REM
+@function rem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
+}

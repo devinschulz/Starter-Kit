@@ -1,0 +1,33 @@
+.container {
+  @include outer-container;
+  padding: 0 em(15);
+}
+
+@include media($mobile-landscape) {
+
+}
+
+@include media($tablet) {
+
+  .container {
+    width: $tablet-width;
+    padding: 0;
+  }
+
+}
+
+@include media($desktop) {
+
+  .container {
+    width: $desktop-width;
+  }
+
+}
+
+@include media($super) {
+
+  .container {
+    width: $super-width;
+  }
+
+}
