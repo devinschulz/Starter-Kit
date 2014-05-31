@@ -185,11 +185,15 @@ module.exports = (grunt) ->
         '<%= dir.img %>/sprt.png'
       ]
 
+    # Rename files
+    # https://github.com/jasonlam604/grunt-contrib-rename
     rename:
       scripts:
         src: '<%= dist.js %>/scripts.min.js'
         dest: '<%= dist.js %>/scripts.js'
 
+    # Connect is a middleware layer for Node.js
+    # https://github.com/senchalabs/connect
     connect:
       options:
         port: 9000
@@ -206,7 +210,8 @@ module.exports = (grunt) ->
       server:
         'sass'
 
-    # Grunt task for converting a set of images into a spritesheet and corresponding CSS variables
+    # Grunt task for converting a set of images into a
+    # sprite and corresponding CSS variables
     # https://github.com/Ensighten/grunt-spritesmith
     sprite:
       all:
@@ -223,7 +228,7 @@ module.exports = (grunt) ->
 
       images:
         files: [
-          '<%= dir.img %>/*.png}'
+          '<%= dir.img %>/*.png'
         ]
         tasks: [
           'clean:image',
