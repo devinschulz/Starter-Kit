@@ -162,16 +162,6 @@ module.exports = (grunt) ->
         src: '<%= dir.css %>/styles.css'
         dest: '<%= dir.css %>/styles.css'
 
-    # Minify HTML
-    # https://github.com/gruntjs/grunt-contrib-htmlmin
-    htmlmin:
-      dist:
-        options:
-          removeComments: true
-          collapseWhitespace: true
-        files:
-          '<%= dist.root %>/index.html' : '<%= dir.app %>/index.html'
-
     # Clear files and folders
     # https://github.com/gruntjs/grunt-contrib-clean
     clean:
@@ -184,13 +174,6 @@ module.exports = (grunt) ->
       images: [
         '<%= dir.img %>/sprt.png'
       ]
-
-    # Rename files
-    # https://github.com/jasonlam604/grunt-contrib-rename
-    rename:
-      scripts:
-        src: '<%= dist.js %>/scripts.min.js'
-        dest: '<%= dist.js %>/scripts.js'
 
     # Connect is a middleware layer for Node.js
     # https://github.com/senchalabs/connect
@@ -219,6 +202,12 @@ module.exports = (grunt) ->
         destImg: '<%= dir.img %>/sprt.png'
         destCSS: '<%= dir.sass %>/modules/_sprite.scss'
         cssFormat: 'scss'
+
+    processhtml:
+      prod:
+        files: [
+          '<%= dist.root %>/index.html' : '<%= dir.app %>/index.html'
+        ]
 
     # Run tasks whenever watched files change.
     # https://github.com/gruntjs/grunt-contrib-watch
@@ -295,9 +284,8 @@ module.exports = (grunt) ->
     'copy'
     'svgmin'
     'imagemin'
-    'htmlmin'
+    'processhtml'
     'clean:scripts'
-    'rename:scripts'
   ]
 
   grunt.registerTask 'serve', (target) ->
